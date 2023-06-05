@@ -1051,8 +1051,8 @@ internal class AnalyticsExtension : Extension {
         val lifecycleSessionStartTimestamp = analyticsState.lifecycleSessionStartTimestamp
         if (lifecycleSessionStartTimestamp > 0) {
             val timeSinceLaunchInSeconds: Long =
-                timeStampInSeconds - TimeUnit.MILLISECONDS.toSeconds(lifecycleSessionStartTimestamp)
-            if (timeSinceLaunchInSeconds in 1..analyticsState.lifecycleMaxSessionLength) {
+                timeStampInSeconds - lifecycleSessionStartTimestamp
+            if (TimeUnit.MILLISECONDS.toSeconds(timeSinceLaunchInSeconds) <= analyticsState.lifecycleMaxSessionLength) {
                 analyticsData[AnalyticsConstants.ContextDataKeys.TIME_SINCE_LAUNCH_KEY] =
                     timeSinceLaunchInSeconds.toString()
             }
